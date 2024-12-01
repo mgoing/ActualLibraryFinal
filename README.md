@@ -1,0 +1,1 @@
+This is a version of the library program created for a final in one of my courses. I am adding this to GH to explore and strengthing my understanding of version control, while also storing it here to display the project for the future.
