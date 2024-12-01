@@ -564,8 +564,6 @@ namespace ActualLibraryFinal
                 
                 bool menuGuide = false;
 
-
-
                 while (!menuGuide)
                 {
                     Console.WriteLine("Would you like to (1) edit a current book or (2) delete a book from the library?");
@@ -710,7 +708,7 @@ namespace ActualLibraryFinal
                 }
             }
 
-            // Placeholder for deleting a book (to be implemented)
+            
             public void DeleteBook()                                                            //TODO change edit C/P to delete and implement actual deleting
             {
                 Console.Clear();
@@ -742,22 +740,110 @@ namespace ActualLibraryFinal
                     Console.WriteLine("Invalid selection.");
                     return;
                 }
-                // Get the selected book
+                                                                                                                         // Get the selected book
                 var book = matchingBooks[selectedIndex - 1];
                 Console.WriteLine($"\nDeleting Book: {book.bookTitle} by {book.bookAuthor}\n");
 
-                // Remove the book from the original bookList using the same book's details
+                                                                                                                    // Remove the book from the original bookList using the same book's details
                 bookList.Remove(book);
 
-                // Save the updated bookList to the file
+                                                                                                                    // Save the updated bookList to the file
                 SaveEntireLibraryToFile();
 
-                Console.WriteLine("Book successfully deleted!");
-                // Get the selected book
-                
+                Console.WriteLine("Book successfully deleted!");              
             }
 
             // Additional utility methods can be added here
+
+            public void WithdrawOrReturnBook()
+            {
+                Console.Clear();
+                Console.WriteLine("=== Withdraw or return an Existing Book ===\n");
+                Console.Write("Enter the Title of desired book: ");
+                string titleInput = Console.ReadLine();
+
+
+                var matchingBooks = bookList
+                    .Where(b => b.bookTitle.IndexOf(titleInput, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+                if (!matchingBooks.Any())                                                                    // Find all books with titles that contain the input (case-insensitive)
+                {
+                    Console.WriteLine("No books found with the given title.");
+                    return;
+                }
+
+
+                Console.WriteLine("\nMatching Books:");
+                for (int i = 0; i < matchingBooks.Count; i++)                                                       // If multiple matches, allow the user to choose
+                {
+                    Console.WriteLine($"{i + 1}. {matchingBooks[i].bookTitle} by {matchingBooks[i].bookAuthor}");
+                }
+
+                Console.Write("\nEnter the number of the book you want to update: ");
+                if (!int.TryParse(Console.ReadLine(), out int selectedIndex) || selectedIndex < 1 || (selectedIndex > matchingBooks.Count))
+                {
+                    Console.WriteLine("Invalid selection.");
+                    return;
+                }
+
+
+                var book = matchingBooks[selectedIndex - 1];                                                // Get the selected book
+                DateTime dateOfCheckOut = DateTime.Now;
+
+                if (book.bookAvail == true) 
+                {
+
+                    Console.WriteLine($"{book.bookTitle} is currently AVAILABLE ");
+                    Console.WriteLine("Would you like to withdraw it? (Yes/No");
+                    bool nav = false;
+                    while (!nav)
+                    {
+                        string navDecide = Console.ReadLine();
+                        if (navDecide == "yes")
+                        {
+                            book.bookAvail = false;
+                            Console.WriteLine($"You have now checked out {book.bookTitle} on {dateOfCheckOut}");
+                            nav = true;
+                        }
+                        else if (navDecide == "no")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter: \"Yes\" or \"No\"");
+                            navDecide = Console.ReadLine();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{book.bookTitle} is currently UNAVAILABLE ");
+                    Console.WriteLine($"If you have checked {book.bookTitle} out, would you like to return it?");
+                    bool nav = false;
+                    while (!nav)
+                    {
+                        string navDecide = Console.ReadLine();
+                        if (navDecide == "yes")
+                        {
+                            book.bookAvail = false;
+                            Console.WriteLine($"You have now returned {book.bookTitle} on {dateOfCheckOut}");
+                            nav = true;
+                        }
+                        else if (navDecide == "no")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter: \"Yes\" or \"No\"");
+                            navDecide = Console.ReadLine();
+                        }
+                    }
+                }
+                
+            }
 
         }
 
