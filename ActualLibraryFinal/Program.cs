@@ -3,12 +3,10 @@
 
 
 
-//TODO Flesh out fact system
-//TODO test adding a new book
-//TODO test deleting a new book
-//TODO test withdrawing a new book
-//TODO improve UX for navigation and handling User input
-//TODO fix age range
+//TODO add an array for user login to show users
+// TODO add more user catch to allow for 
+//TODO fix age range dictionary and its usage in other areas so that they arent reliant on the dictionary created in createAgeRange
+//TODO determine GIT savign to gather correct file
 
 
 
