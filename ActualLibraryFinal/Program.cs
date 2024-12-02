@@ -13,6 +13,21 @@
 
 
 
+
+
+
+
+
+//TODO Flesh out fact system
+//TODO test adding a new book
+//TODO test deleting a new book
+//TODO test withdrawing a new book
+//TODO improve UX for navigation and handling User input
+//TODO fix age range
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -25,20 +40,20 @@ namespace ActualLibraryFinal
 {
     internal class Program
     {
-                                                                                                // Define the file path for storing books
+        // Define the file path for storing books
         public static string filePath = "fullBookList.txt";
 
         static void Main(string[] args)
         {
-                                                                                            // Initialize the Library with the file path
+            // Initialize the Library with the file path
             Library baseLibrary = new Library(filePath);
             baseLibrary.LoadBooksFromFile();
 
-                                                                                            // Initialize the menu handler with the Library instance
+            // Initialize the menu handler with the Library instance
             menuHandlerClass menu = new menuHandlerClass(baseLibrary);
 
 
-                                                                                            // Main loop to keep the menu active until the user decides to exit
+            // Main loop to keep the menu active until the user decides to exit
             try
             {
                 bool exit = false;
@@ -49,14 +64,14 @@ namespace ActualLibraryFinal
                     Console.WriteLine("\nDo you want to return to the main menu? (yes/no)");
                     string input = Console.ReadLine().ToLower();
 
-                    
+
                     while (input != "yes" && input != "no")
                     {
                         Console.WriteLine("Please enter \"yes\" or \"no\":");
                         input = Console.ReadLine().ToLower();
                     }
 
-                    
+
                     if (input == "no")
                     {
                         exit = true;
@@ -67,12 +82,12 @@ namespace ActualLibraryFinal
             }
             catch (Exception ex)
             {
-                                                                                                                // Handle unexpected errors if any
+                // Handle unexpected errors if any
                 Console.WriteLine("An unexpected error occurred: " + ex.Message);
             }
             finally
             {
-                
+
                 Environment.Exit(0);
             }
         }
@@ -81,8 +96,8 @@ namespace ActualLibraryFinal
 
 
 
-         
-                                                                                                // NewBook class which holds all the book parameters
+
+        // NewBook class which holds all the book parameters
         public class NewBook
         {
             public string bookTitle { get; set; }
@@ -100,7 +115,7 @@ namespace ActualLibraryFinal
                 Console.WriteLine($"Written by: {bookAuthor} on {bookPubDate}.");
                 Console.WriteLine($"Genre: {bookGenre}\nSuggested age range: {bookAgeRange}");
                 Console.WriteLine($"ISBN: {bookIBSN}");
-                  
+
                 Console.WriteLine($"Summary: {bookSummary}\n");
                 if (bookAvail == true)
                 {
@@ -111,10 +126,10 @@ namespace ActualLibraryFinal
                     Console.WriteLine("Currently unavailable. Contact librarian for more information");
                 }
                 Console.WriteLine("-----------------------------\n");
-                
+
             }
 
-                                                                                                     // Method to create a new book title
+            // Method to create a new book title
             public static string CreateBookTitle()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -123,7 +138,7 @@ namespace ActualLibraryFinal
                 return Console.ReadLine();
             }
 
-                                                                                                    // Method to create a new book author
+            // Method to create a new book author
             public static string CreateBookAuthor()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -132,7 +147,7 @@ namespace ActualLibraryFinal
                 return Console.ReadLine();
             }
 
-                                                                                                    // Method to create a new book genre with validation
+            // Method to create a new book genre with validation
             public static string CreateBookGenre()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -157,7 +172,7 @@ namespace ActualLibraryFinal
 
                     if (int.TryParse(input, out int choice) && choice >= 1 && choice <= 8)
                     {
-                                                                                                        // Assign the genre based on the user's choice
+                        // Assign the genre based on the user's choice
                         switch (choice)
                         {
                             case 1: tempGenre = "Mystery"; break;
@@ -169,7 +184,7 @@ namespace ActualLibraryFinal
                             case 7: tempGenre = "Fantasy"; break;
                             case 8: tempGenre = "Other"; break;
                         }
-                        testBool = false; 
+                        testBool = false;
                     }
                     else
                     {
@@ -177,10 +192,10 @@ namespace ActualLibraryFinal
                     }
                 }
 
-                return tempGenre; 
+                return tempGenre;
             }
 
-                                                                                                        // Method to create a new book summary with character limit
+            // Method to create a new book summary with character limit
             public static string CreateBookSummary()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -196,7 +211,7 @@ namespace ActualLibraryFinal
                 return tempSummary;
             }
 
-                                                                                                                // Method to create a new book ISBN with validation
+            // Method to create a new book ISBN with validation
             public static long CreateBookISBN()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -218,13 +233,13 @@ namespace ActualLibraryFinal
                 }
             }
 
-                                                                                                // Method to set book availability (default is available)
+            // Method to set book availability (default is available)
             public static bool CreateBookAvail()
             {
                 return true;                                                                    // Book is available upon creation
             }
 
-                                                                                                    // Method to create a new book age range with validation
+            // Method to create a new book age range with validation
             public static string CreateBookAgeRange()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -260,7 +275,7 @@ namespace ActualLibraryFinal
                 }
             }
 
-                                                                                                    // Method to create a new book publication date with validation
+            // Method to create a new book publication date with validation
             public static DateTime CreateBookPubDate()
             {
                 string titleString = ("=== Registering a New Book ===\n");
@@ -291,7 +306,7 @@ namespace ActualLibraryFinal
                 }
             }
 
-            
+
 
 
 
@@ -307,12 +322,12 @@ namespace ActualLibraryFinal
 
                 if (filterType.Equals("genre", StringComparison.OrdinalIgnoreCase))
                 {
-                                                                                                            // Use CreateBookGenre to select the genre
+                    // Use CreateBookGenre to select the genre
                     searchTerm = CreateBookGenre();
                 }
                 else if (filterType.Equals("age range", StringComparison.OrdinalIgnoreCase))
                 {
-                                                                                                                        // Prompt for specific age range
+                    // Prompt for specific age range
                     Console.WriteLine("Please select a specific age range:");
                     Console.WriteLine("1. Children");
                     Console.WriteLine("2. Pre-Teen");
@@ -325,12 +340,12 @@ namespace ActualLibraryFinal
                 }
                 else
                 {
-                                                                                            // For other filter types (title, author, publication date)
+                    // For other filter types (title, author, publication date)
                     Console.WriteLine($"Enter the search term for {filterType}:");
                     searchTerm = Console.ReadLine();
                 }
 
-                                                                                            // Filter based on the specified search term and filter type
+                // Filter based on the specified search term and filter type
                 matchingBooks = bookList.Where(book =>
                     (filterType.Equals("title", StringComparison.OrdinalIgnoreCase) && book.bookTitle.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     (filterType.Equals("author", StringComparison.OrdinalIgnoreCase) && book.bookAuthor.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0) ||
@@ -372,10 +387,10 @@ namespace ActualLibraryFinal
 
             public static List<NewBook> GeneralSearch(List<NewBook> bookList, string searchTerm)
             {
-                                                                                                              // Convert search term to lowercase for case-insensitive matching
+                // Convert search term to lowercase for case-insensitive matching
                 searchTerm = searchTerm.ToLower();
 
-                                                                                                                 // Search across all major fields for matches
+                // Search across all major fields for matches
                 List<NewBook> matchingBooks = bookList.Where(book =>
                     book.bookTitle.ToLower().Contains(searchTerm) ||
                     book.bookAuthor.ToLower().Contains(searchTerm) ||
@@ -428,7 +443,7 @@ namespace ActualLibraryFinal
                             book.displayInfo();
                         }
                     }
-                   
+
                     else
                     {
                         Console.WriteLine("No books found matching the search term.");
@@ -459,24 +474,24 @@ namespace ActualLibraryFinal
 
 
 
-                                                                                                    // new Library class
+        // new Library class
         public class Library
         {
             public List<NewBook> bookList { get; private set; }
             private string filePath;
 
-                                                                                            // Constructor to initialize the Library with a file path
+            // Constructor to initialize the Library with a file path
             public Library(string path)
             {
                 filePath = path;
                 bookList = new List<NewBook>();
             }
 
-                                                                                                // Method to register a new book
+            // Method to register a new book
             public void RegisterNewBook()
             {
                 Console.Clear();
-               
+
 
                 NewBook newBook = new NewBook
                 {
@@ -504,7 +519,7 @@ namespace ActualLibraryFinal
                     Console.WriteLine("NOTE: This program stores books locally on each computer. \n If this is your first time running this program on this computer," +
                         " please follow instructions to add a new book in the main menu which will create the save file to store your library.\n" +
                         "Upon restarting this program, you should not see this message again on your computer");
-                                                                                            
+
                     Console.WriteLine("Press Enter to continue...");
                     while (Console.ReadKey(true).Key != ConsoleKey.Enter)                   //^"error" message upon first running of the program to give user instructions
                     {
@@ -546,14 +561,14 @@ namespace ActualLibraryFinal
                 }
             }
 
-            
+
             public void SaveEntireLibraryToFile()
             {                                                                                                   // Method to save the entire library to the file
                 try
                 {
                     using (StreamWriter writer = new StreamWriter(filePath, false))                             // Overwriting the file
                     {
-                        
+
                         writer.WriteLine("Title,Author,Genre,Summary,ISBN,Availability,AgeRange,PublicationDate");
 
                         foreach (var book in bookList)
@@ -573,7 +588,7 @@ namespace ActualLibraryFinal
 
             public void UpdateBook()                                                                                     //method to update a single book
             {
-                
+
                 bool menuGuide = false;
 
                 while (!menuGuide)
@@ -623,21 +638,21 @@ namespace ActualLibraryFinal
 
                             // Prompt user for each field, allowing them to press ENTER to keep current value
                             book.bookTitle = GetUpdatedField("Title", book.bookTitle);
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             book.bookAuthor = GetUpdatedField("Author", book.bookAuthor);
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             Console.WriteLine($"Current Genre: {book.bookGenre}");
                             Console.WriteLine("Enter new genre or press ENTER to keep current value:");
                             string genreInput = Console.ReadLine();
                             if (!string.IsNullOrEmpty(genreInput))
                             {
                                 string newGenre = NewBook.CreateBookGenre();                                     // reusing old method that adds the genre of a new book
-                    //            Utility.ClearScreenKeepLine(lineToKeep);
+                                                                                                                 //            Utility.ClearScreenKeepLine(lineToKeep);
                                 book.bookGenre = newGenre;
                             }
 
 
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             Console.WriteLine($"Current Age Range: {book.bookAgeRange}");
                             Console.WriteLine("Enter new age range or press ENTER to keep current value:");
                             string ageRangeInput = Console.ReadLine();
@@ -648,7 +663,7 @@ namespace ActualLibraryFinal
                             }
 
 
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             Console.WriteLine($"Current Summary: {book.bookSummary}");
                             Console.WriteLine("Enter new summary (max 100 characters) or press ENTER to keep current value:");
                             string summaryInput = Console.ReadLine();                                                               //check summary length < 100 characters
@@ -662,9 +677,9 @@ namespace ActualLibraryFinal
                                 book.bookSummary = summaryInput;
                             }
 
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             book.bookPubDate = GetUpdatedField("Publication Date", book.bookPubDate);
-                    //        Utility.ClearScreenKeepLine(lineToKeep);
+                            //        Utility.ClearScreenKeepLine(lineToKeep);
                             book.bookAvail = PromptForAvailability(book.bookAvail);
 
                             SaveEntireLibraryToFile();                                                                          // Save changes to the entire library
@@ -689,7 +704,7 @@ namespace ActualLibraryFinal
                 }
             }
 
-                                                                                                                    // Helper method to get updated field values
+            // Helper method to get updated field values
             private string GetUpdatedField(string fieldName, string currentValue)
             {
                 Console.Write($"Enter new {fieldName} (or press ENTER to keep \"{currentValue}\"): ");
@@ -697,7 +712,7 @@ namespace ActualLibraryFinal
                 return string.IsNullOrWhiteSpace(input) ? currentValue : input;
             }
 
-                                                                                                                    // Helper method to update availability
+            // Helper method to update availability
             private bool PromptForAvailability(bool currentAvail)
             {
                 Console.Write($"Is the book available? (current: {(currentAvail ? "Yes" : "No")}) Enter 'yes' or 'no' (or press ENTER to keep current): ");
@@ -721,7 +736,7 @@ namespace ActualLibraryFinal
                 }
             }
 
-            
+
             public void DeleteBook()                                                            //TODO change edit C/P to delete and implement actual deleting
             {
                 Console.Clear();
@@ -729,7 +744,7 @@ namespace ActualLibraryFinal
                 Console.Write("Enter the Title of the book to delete: ");
                 string titleInput = Console.ReadLine();
 
-                                                                                                // Find all books with titles that contain the input (case-insensitive)
+                // Find all books with titles that contain the input (case-insensitive)
                 var matchingBooks = bookList
                     .Where(b => b.bookTitle.IndexOf(titleInput, StringComparison.OrdinalIgnoreCase) >= 0)
                     .ToList();
@@ -740,7 +755,7 @@ namespace ActualLibraryFinal
                     return;
                 }
 
-                                                                                                                            // If multiple matches, allow the user to choose
+                // If multiple matches, allow the user to choose
                 Console.WriteLine("\nMatching Books:");
                 for (int i = 0; i < matchingBooks.Count; i++)
                 {
@@ -753,27 +768,27 @@ namespace ActualLibraryFinal
                     Console.WriteLine("Invalid selection.");
                     return;
                 }
-                                                                                                                         // Get the selected book
+                // Get the selected book
                 var book = matchingBooks[selectedIndex - 1];
                 Console.WriteLine($"\nDeleting Book: {book.bookTitle} by {book.bookAuthor}\n");
 
-                                                                                                                    // Remove the book from the original bookList using the same book's details
+                // Remove the book from the original bookList using the same book's details
                 bookList.Remove(book);
 
-                                                                                                                    // Save the updated bookList to the file
+                // Save the updated bookList to the file
                 SaveEntireLibraryToFile();
 
-                Console.WriteLine("Book successfully deleted!");              
+                Console.WriteLine("Book successfully deleted!");
             }
 
             // Additional utility methods can be added here
 
             public void WithdrawOrReturnBook()
             {
-                
+
                 string stringToKeep = ("=== Withdraw or return an Existing Book ===\n");
                 Utility.ClearScreenKeepLine(stringToKeep);
-                    
+
                 Console.Write("Enter the Title of desired book: ");
                 string titleInput = Console.ReadLine();
 
@@ -807,7 +822,7 @@ namespace ActualLibraryFinal
                 DateTime dateOfCheckOut = DateTime.Now;
 
                 Utility.ClearScreenKeepLine(stringToKeep);
-                if (book.bookAvail == true) 
+                if (book.bookAvail == true)
                 {
 
                     Console.WriteLine($"{book.bookTitle} is currently AVAILABLE ");
@@ -859,13 +874,11 @@ namespace ActualLibraryFinal
                         }
                     }
                 }
-                
+
             }
 
         }
 
-            
-        
 
 
 
@@ -878,16 +891,18 @@ namespace ActualLibraryFinal
 
 
 
-                                                                                                        
+
+
+
         class menuHandlerClass
         {                                                                                               // new class
             private Dictionary<int, Action> menuActions;
             private Library library;
 
             private LibraryFacts libraryFacts;
-             
 
-           
+
+
             public menuHandlerClass(Library lib)                                                    //new class constructor to connect to library class
             {
                 library = lib;
@@ -895,7 +910,7 @@ namespace ActualLibraryFinal
                 InitializeMenuActions();
             }
 
-                                                                                            
+
             private void InitializeMenuActions()
             {
                 menuActions = new Dictionary<int, Action>                                                // Initialize the menu actions dictionary that holds the connector methods
@@ -908,7 +923,7 @@ namespace ActualLibraryFinal
                 };
             }
 
-            
+
             public void DisplayMainMenuFirst()                                                                      // Method to display the main menu and handle user input
             {
                 Console.Clear();
@@ -941,9 +956,9 @@ namespace ActualLibraryFinal
                 }
             }
 
-                                                                                                // Action methods corresponding to menu options
+            // Action methods corresponding to menu options
 
-           
+
             private void AddNewBooks()                                                      //connector method to allow the "menu" to run adding books method
             {
                 Console.WriteLine("Reserving space for a new book...");
@@ -952,17 +967,17 @@ namespace ActualLibraryFinal
                 library.RegisterNewBook();
             }
 
-            
+
             private void SearchForBooks()                                                       //connector method to allow the "menu" to run search method
             {
                 Console.WriteLine("Pulling up search functionality...");
                 System.Threading.Thread.Sleep(2000);
                 Console.Clear();
                 NewBook.SearchMenu(library.bookList);
-                
+
             }
 
-            
+
             private void WithdrawOrReturn()
             {                                                                                   //connector method to allow the "menu" to run the withdraw/return method
 
@@ -972,8 +987,8 @@ namespace ActualLibraryFinal
                 library.WithdrawOrReturnBook();
             }
 
-                                                                                                         
-            private void EditBooks()                                                                     
+
+            private void EditBooks()
             {
                 Console.WriteLine("Gathering editable books...");                                           // Connector method to allow the "menu" to run the editing method
                 System.Threading.Thread.Sleep(2000);
@@ -981,13 +996,13 @@ namespace ActualLibraryFinal
                 library.UpdateBook();
             }
 
-            
+
             private void SurpriseFact()                                                                     //Connector method to allow the "menu" to run surprise fact method
             {
                 Console.WriteLine("Generating a surprise facts...");
                 System.Threading.Thread.Sleep(2000);
                 Console.Clear();
-              
+
                 Console.WriteLine("Welcome to the Surprise Fact section!");
                 bool continueFacts = true;
 
@@ -1007,7 +1022,7 @@ namespace ActualLibraryFinal
                 }
 
                 Console.WriteLine("Returning to the main menu...");
-            
+
                 //TODO  Implement surprise fact generation here
             }
         }
@@ -1031,8 +1046,8 @@ namespace ActualLibraryFinal
             () => $"Most popular genre: {GetMostPopularGenre()}",
             () => $"Oldest book: {GetOldestBook()}",
             () => "Fun fact: Libraries have existed for over 4,000 years!",
-            () => $"Most popular age range: {GetMostPopularAgeRange()}", 
-            
+            () => $"Most popular age range: {GetMostPopularAgeRange()}",
+
         };
 
             int randomIndex = random.Next(facts.Count);
@@ -1053,10 +1068,10 @@ namespace ActualLibraryFinal
                 .GroupBy(book => book.bookAgeRange)
                 .OrderByDescending(group => group.Count())
                 .FirstOrDefault()?.Key ?? "Unknown";
-            
+
         }
 
-        
+
 
         private string GetOldestBook()
         {
@@ -1082,4 +1097,3 @@ namespace ActualLibraryFinal
         }
     }
 }
-
