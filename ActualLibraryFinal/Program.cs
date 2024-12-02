@@ -515,27 +515,23 @@ namespace ActualLibraryFinal
             {
                 if (!File.Exists(filePath))
                 {
-                    Console.WriteLine("File not found. Library will start empty.");
-                    Console.WriteLine("NOTE: This program stores books locally on each computer. \n If this is your first time running this program on this computer," +
-                        " please follow instructions to add a new book in the main menu which will create the save file to store your library.\n" +
-                        "Upon restarting this program, you should not see this message again on your computer");
-
-                    Console.WriteLine("Press Enter to continue...");
-                    while (Console.ReadKey(true).Key != ConsoleKey.Enter)                   //^"error" message upon first running of the program to give user instructions
-                    {
-                        Console.WriteLine("Press Enter to continue...");
-                    }
-                    Console.Clear();
+                    Console.WriteLine("File not found. Creating a new library file...");
+                    File.WriteAllText(filePath, "Title, Author, Genre, Summary, ISBN, Availability, AgeRange, PublicationDate\n");
                     return;
+
                 }
+
                 try
                 {
                     bookList = File.ReadAllLines(filePath)
-                        .Skip(1) // Skip header line if present
-                        .Where(line => !string.IsNullOrWhiteSpace(line))
+                        .Skip(1)
+                        .Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("Title", StringComparison.OrdinalIgnoreCase))
                         .Select(line =>
                         {
                             var parts = line.Split(',');
+
+                            if (parts.Length != 8)
+                                throw new FormatException($"Invalid line format: {line}");
 
                             return new NewBook
                             {
@@ -543,22 +539,26 @@ namespace ActualLibraryFinal
                                 bookAuthor = parts[1],
                                 bookGenre = parts[2],
                                 bookSummary = parts[3],
-                                bookIBSN = long.Parse(parts[4]),
-                                bookAvail = bool.Parse(parts[5]),
-                                bookAgeRange = parts[6],
+                                bookIBSN = long.TryParse(parts[4], out var isbn) ? isbn : 0,
+                                bookAvail = bool.TryParse(parts[5], out var avail) && avail,
+                                bookAgeRange = string.IsNullOrWhiteSpace(parts[6]) ? "Unknown" : parts[6],
                                 bookPubDate = parts[7],
                             };
+
+
+
+
                         })
                         .ToList();
                     Console.WriteLine($"Successfully loaded {bookList.Count} book(s) from file.");
-                    System.Threading.Thread.Sleep(3000);
-                    Console.Clear();
+                    Console.WriteLine("Press any button to continue...");
+                    Console.ReadLine();
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     Console.WriteLine($"Error loading book(s) from file: {ex.Message}");
                     bookList = new List<NewBook>();
                 }
+
             }
 
 
