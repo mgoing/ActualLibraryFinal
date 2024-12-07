@@ -1,6 +1,4 @@
 ﻿
-//TODO FOR SUBMISSION fix age range
-
 //NOTE: This program is in a strong submission state. These TODOs are notes for future exploration and improvement of program for personal goals and can be ignored
 
 //TODO to improve: add 30 or 14 day borrowing period before book is "returned" (bool just changes to true from false)
@@ -501,6 +499,8 @@ namespace ActualLibraryFinal
                 {
                     Console.WriteLine("File not found. Creating a new library file...");
                     File.WriteAllText(filePath, "Title, Author, Genre, Summary, ISBN, Availability, AgeRange, PublicationDate\n");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
                     return;
 
                 }
@@ -1093,7 +1093,7 @@ namespace ActualLibraryFinal
             () => "     __...--~~~~~-._   _.-~~~~~--...__\r\n    //               `V'               \\\\ \r\n   //                 |                 \\\\ \r\n  //__...--~~~~~~-._  |  _.-~~~~~~--...__\\\\ \r\n //__.....----~~~~._\\ | /_.~~~~----.....__\\\\\r\n====================\\\\|//====================\r\n                dwb `---`",
             () => "        ____\r\n     .-\" +' \"-.    __,  ,___,\r\n    /.'.'A_'*`.\\  (--|__| _,,_ ,_\r\n   |:.*'/\\-\\. ':|   _|  |(_||_)|_)\\/\r\n   |:.'.||\"|.'*:|  (        |  | _/\r\n    \\:~^~^~^~^:/          __,  ,___,\r\n     /`-....-'\\          (--|__| _ |' _| _,   ,\r\njgs /          \\           _|  |(_)||(_|(_|\\//_)\r\n    `-.,____,.-'          (               _/",
             () => " _____________________________________________\r\n|.'',        Public_Library_Halls         ,''.|\r\n|.'.'',                                 ,''.'.|\r\n|.'.'.'',                             ,''.'.'.|\r\n|.'.'.'.'',                         ,''.'.'.'.|\r\n|.'.'.'.'.|                         |.'.'.'.'.|\r\n|.'.'.'.'.|===;                 ;===|.'.'.'.'.|\r\n|.'.'.'.'.|:::|',             ,'|:::|.'.'.'.'.|\r\n|.'.'.'.'.|---|'.|, _______ ,|.'|---|.'.'.'.'.|\r\n|.'.'.'.'.|:::|'.|'|???????|'|.'|:::|.'.'.'.'.|\r\n|,',',',',|---|',|'|???????|'|,'|---|,',',',',|\r\n|.'.'.'.'.|:::|'.|'|???????|'|.'|:::|.'.'.'.'.|\r\n|.'.'.'.'.|---|','   /%%%\\   ','|---|.'.'.'.'.|\r\n|.'.'.'.'.|===:'    /%%%%%\\    ':===|.'.'.'.'.|\r\n|.'.'.'.'.|%%%%%%%%%%%%%%%%%%%%%%%%%|.'.'.'.'.|\r\n|.'.'.'.','       /%%%%%%%%%\\       ','.'.'.'.|\r\n|.'.'.','        /%%%%%%%%%%%\\        ','.'.'.|\r\n|.'.','         /%%%%%%%%%%%%%\\         ','.'.|\r\n|.','          /%%%%%%%%%%%%%%%\\          ','.|\r\n|;____________/%%%%%Spicer%%%%%%\\____________;|",
-            () => $"{returnArt()}",
+            
 
         };
 
